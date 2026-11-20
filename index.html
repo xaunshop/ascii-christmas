@@ -1,26 +1,33 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080d18">
-  <title>ASCII Christmas — ёлка из кода</title>
-  <link rel="stylesheet" href="style.css?v=56ac63c1f5fd">
+  <title>Christmas 2026 | Xaunshop</title>
+  <link rel="stylesheet" href="style.css?v=christmas2026">
 </head>
 <body>
   <main class="studio">
-    <section class="scene" aria-label="Вращающаяся ёлка из ASCII-символов, со снегом и огоньками">
-      <canvas id="tree" aria-label="Ёлка постепенно собирается из символов: ветки, гирлянда, игрушки, подарки и звезда. Пробел — пауза, R — повторить.">Ваш браузер не поддерживает Canvas.</canvas>
+    <section class="scene" aria-label="Animated ASCII Christmas tree with snow and lights">
+      <canvas id="tree" aria-label="Animated Christmas tree">Your browser does not support Canvas.</canvas>
     </section>
-    <section class="editor" aria-label="Автоматически прокручивающийся код анимации">
-      <div class="editor-bar">
-        <span class="filename"><span class="file-icon">JS</span> christmas_tree.js</span>
+    <section class="christmas-actions" aria-label="Christmas registration and countdown">
+      <a class="register-button" href="/registration/">Register Now</a>
+      <div class="countdown-wrap">
+        <div class="countdown-title">COUNTDOWN TO CHRISTMAS 2026</div>
+        <div class="countdown" role="timer" aria-live="off">
+          <div class="time-box"><span id="hours">00</span><small>HOURS</small></div>
+          <b>:</b>
+          <div class="time-box"><span id="minutes">00</span><small>MINUTES</small></div>
+          <b>:</b>
+          <div class="time-box"><span id="seconds">00</span><small>SECONDS</small></div>
+        </div>
       </div>
-      <div class="code-viewport" tabindex="0" aria-label="Код сцены. Пробел — пауза."><div id="code" aria-hidden="true"></div><div class="reading-line"></div></div>
-
     </section>
   </main>
   <div id="toast" role="status"></div>
   <script src="scene.js?v=683dc32e890b"></script>
+  <script src="countdown.js?v=1"></script>
 </body>
 </html>
