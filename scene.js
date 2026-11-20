@@ -415,47 +415,10 @@ function renderScene(time) {
   ctx.shadowBlur = 0;
 }
 
-// The editor displays the very functions that draw the scene above.
-const source = [
-  '// CHRISTMAS 2026 · a winter scene in ASCII',
-  '// Every branch, every light, every snowflake is a character.',
-  '', 'const TAU = Math.PI * 2;', "const GLYPHS = 'xvVXW%&#@o^+';", "const CELL = { width: 5.6, height: 8.8 };",
-  'const GOLD = [255, 221, 124];', 'const RED = [248, 62, 79];', '',
-  'const TIMING = ' + JSON.stringify(TIMING, null, 2) + ';',
-  smooth.toString(), '', radiusAt.toString(), '', makeTree.toString(), '', snowGround.toString(), '', renderScene.toString(),
-].join('\n').split('\n');
-function highlight(line) {
-  const token = /(\/\/.*$|'[^']*'|"[^"]*"|`[^`]*`|\b(?:const|let|function|return|for|of|if|else|new|true|false)\b|\b\d+(?:\.\d+)?\b|\b\w+(?=\())/g;
-  const fragment = document.createDocumentFragment();
-  let end = 0;
-  for (const match of line.matchAll(token)) {
-    fragment.append(document.createTextNode(line.slice(end, match.index)));
-    const span = document.createElement('span');
-    const value = match[0];
-    span.className = 'tok-' + (value.startsWith('//') ? 'comment' : /^["'`]/.test(value) ? 'string' : /^\d/.test(value) ? 'number' : /^(const|let|function|return|for|of|if|else|new|true|false)$/.test(value) ? 'keyword' : 'function');
-    span.textContent = value;
-    fragment.append(span);
-    end = match.index + value.length;
-  }
-  fragment.append(document.createTextNode(line.slice(end)));
-  return fragment;
-}
-const code = document.querySelector('#code');
-for (let repeat = 0; repeat < 2; repeat++) {
-  source.forEach((line, i) => {
-    const row = document.createElement('div');
-    row.className = 'code-line';
-    const number = document.createElement('span');
-    number.className = 'line-number'; number.textContent = i + 1;
-    const content = document.createElement('span');
-    content.className = 'source-line'; content.append(highlight(line));
-    row.append(number, content); code.append(row);
-  });
-}
 function togglePause() { state.paused = !state.paused; }
 function restart() {
   state.time = 0; state.paused = false; last = 0;
-  renderScene(0); scrollCode(0);
+  renderScene(0);
 }
 let toastTimer;
 function toast(message) {
@@ -487,30 +450,6 @@ window.addEventListener('keydown', event => {
   if (event.code === 'KeyF') fullscreen();
 });
 document.addEventListener('visibilitychange', () => { last = 0; });
-// Scroll to the code for the stage currently being drawn.
-const codeCues = [
-  [0, 'function makeTree()'],
-  [TIMING.branches, 'for (let row ='],
-  [5.8, '// Branches grow'],
-  [TIMING.garland, '// The golden garland'],
-  [TIMING.ornaments, '// Baubles appear'],
-  [TIMING.gifts, '// Each present'],
-  [TIMING.lights, '// The small lights'],
-  [TIMING.star, '// The star ignites'],
-  [TIMING.message, '// The greeting is typed'],
-  [18, 'const shown ='],
-].map(([time, marker]) => ({ time, line: Math.max(0, source.findIndex(line => line.includes(marker))) }));
-function scrollCode(time) {
-  let index = 0;
-  while (index < codeCues.length - 2 && time >= codeCues[index + 1].time) index++;
-  const from = codeCues[index], to = codeCues[index + 1];
-  const progress = smooth((time - from.time) / (to.time - from.time));
-  const line = from.line + (to.line - from.line) * progress;
-  const lineHeight = code.firstElementChild.getBoundingClientRect().height;
-  const drift = Math.max(0, time - 18) * 12;
-  const offset = Math.max(0, line * lineHeight + drift - code.parentElement.clientHeight * .25) % (source.length * lineHeight);
-  code.style.transform = `translateY(${-offset}px)`;
-}
 function animate(now) {
   requestAnimationFrame(animate);
   if (now - frame < 1000 / 30 - .5) return;
@@ -518,6 +457,5 @@ function animate(now) {
   last = now; frame = now;
   if (!state.paused && !document.hidden) state.time += delta;
   renderScene(state.time);
-  scrollCode(state.time);
 }
 resize(); requestAnimationFrame(animate);
