@@ -5,29 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080d18">
   <title>Christmas 2026 | Xaunshop</title>
-  <link rel="stylesheet" href="style.css?v=christmas2026">
+  <link rel="stylesheet" href="style.css?v=christmas-overlay-2026">
 </head>
 <body>
   <main class="studio">
-    <section class="scene" aria-label="Animated ASCII Christmas tree with snow and lights">
-      <canvas id="tree" aria-label="Animated Christmas tree">Your browser does not support Canvas.</canvas>
+    <section class="scene" aria-label="Animated ASCII Christmas tree with falling snow and lights">
+      <canvas id="tree" aria-label="Animated ASCII Christmas tree">Your browser does not support Canvas.</canvas>
     </section>
-    <section class="christmas-actions" aria-label="Christmas registration and countdown">
+
+    <section class="christmas-overlay" aria-label="Christmas registration and countdown">
       <a class="register-button" href="/registration/">Register Now</a>
-      <div class="countdown-wrap">
-        <div class="countdown-title">COUNTDOWN TO CHRISTMAS 2026</div>
-        <div class="countdown" role="timer" aria-live="off">
-          <div class="time-box"><span id="hours">00</span><small>HOURS</small></div>
-          <b>:</b>
-          <div class="time-box"><span id="minutes">00</span><small>MINUTES</small></div>
-          <b>:</b>
-          <div class="time-box"><span id="seconds">00</span><small>SECONDS</small></div>
-        </div>
+      <div class="countdown" role="timer" aria-label="Countdown to Christmas 2026">
+        <div class="time-box"><span id="days">000</span><small>DAYS</small></div>
+        <div class="time-box"><span id="hours">00</span><small>HRS</small></div>
+        <div class="time-box"><span id="minutes">00</span><small>MIN</small></div>
+        <div class="time-box"><span id="seconds">00</span><small>SEC</small></div>
       </div>
+    </section>
+
+    <!-- Kept in the DOM because scene.js uses it to animate its source-code timeline.
+         It is visually hidden so the code-editor panel is not shown on the page. -->
+    <section class="editor" aria-hidden="true">
+      <div class="code-viewport"><div id="code"></div></div>
     </section>
   </main>
   <div id="toast" role="status"></div>
   <script src="scene.js?v=683dc32e890b"></script>
-  <script src="countdown.js?v=1"></script>
+  <script src="countdown.js?v=christmas2026"></script>
 </body>
 </html>
